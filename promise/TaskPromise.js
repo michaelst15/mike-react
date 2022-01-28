@@ -1,15 +1,27 @@
 const box = document.getElementById('data');
-const search = document.getElementById('Search');
-const url = "https://newsapi.org/v2/everything?q=tesla&from=2021-12-20&sortBy=publishedAt&apiKey=1e4d7358c26843d98c618391469576e2";
+let search = "tesla";
+let url = "https://newsapi.org/v2/everything?q=${search}&apiKey=1e4d7358c26843d98c618391469576e2";
+
+
+function inPromise() {
 axios.get(url)                                         
   .then(response => {
     box.innerHTML = render(response.data);
   })                                          
-  .catch(error => {
-    box.innerHTML = message(error.message);
-  });
+  .catch(error => {                      
+    box.innerHTML = message(error.message);             
+  });                                                                                                                       
+}                                         
 
-         
+                                                                                     
+function myFunction() {
+  search = document.getElementById('input-search').value;
+  url = `https://newsapi.org/v2/everything?q=${search}&apiKey=1e4d7358c26843d98c618391469576e2`;
+  console.log(search.url)
+  searching();
+}  
+
+
 function render(response) {
 let box = '';
 response.articles.forEach(data => {
@@ -24,11 +36,9 @@ response.articles.forEach(data => {
 };
 
 
-// const url = "https://newsapi.org/v2/everything?q=apple&from=2022-01-10&to=2022-01-10&sortBy=popularity&apiKey=1e4d7358c26843d98c618391469576e2";
-// axios.get(url)
-//   .then(function (response) {
-//     console.log(response.data);
-//   })
-//   .catch(function (error) {
-//     console.log(error);
-//   });
+function searching() {
+  const data = inPromise();
+	render(data.box);
+}
+
+searching()
